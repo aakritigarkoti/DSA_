@@ -1,8 +1,8 @@
 #include<iostream>
-#include<queue>
+#include<queue>//for level order traversal , BFS
 using namespace std;
 
-class node {
+class node {//creating a binary tree
     public:
         int data;
         node* left;
@@ -33,13 +33,104 @@ node* buildTree(node* root) {
     return root;
 
 }
-          /// @brief 
-          /// @return 
-          int main(){
+          
+         
+
+void levelOrderTraversal(node* root) {  //level order traversal
+    queue<node*> q;
+    q.push(root);
+    q.push(NULL);
+
+    while(!q.empty()) {
+        node* temp = q.front();
+        q.pop();
+
+        if(temp == NULL) { 
+            //purana level complete traverse ho chuka hai
+            cout << endl;
+            if(!q.empty()) { 
+                //queue still has some child ndoes
+                q.push(NULL);
+            }  
+        }
+        else{
+            cout << temp -> data << " ";
+            if(temp ->left) {
+                q.push(temp ->left);
+            }
+
+            if(temp ->right) {
+                q.push(temp ->right);
+            }
+        }
+    }
+
+}
+
+void inorder(node* root) {
+    //base case
+    if(root == NULL) {
+        return ;
+    }
+
+    inorder(root->left);
+    cout << root-> data << " ";
+    inorder(root->right);
+
+}
+
+void preorder(node* root) {
+    //base case
+    if(root == NULL) {
+        return ;
+    }
+
+    cout << root-> data << " ";
+    preorder(root->left);
+    preorder(root->right);
+
+}
+
+void postorder(node* root) {
+    //base case
+    if(root == NULL) {
+        return ;
+    }
+
+    postorder(root->left);
+    postorder(root->right);
+    cout << root-> data << " ";
+
+}
+
+ int main(){
             node* root = NULL;
 
-            root = buildTree(root);
+            root = buildTree(root);//creating a binary tree
+            root = levelOrderTraversal(root);//level order traversal
+
+            // 1 3 5 7 11 17 -1 -1 -1 -1 -1 -1 -1
+
+    /*
+    //creating a Tree
+    root = buildTree(root);
+    //1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1 
+    //level order
+    cout << "Printing the level order tracersal output " << endl;
+    levelOrderTraversal(root);
+
+    cout << "inorder traversal is:  ";
+    inorder(root); 
+
+    cout << endl << "preorder traversal is:  ";
+    preorder(root); 
+
+    cout << endl << "postorder traversal is:  ";
+    postorder(root); 
+    */
+   
              return 0;
           }
+
 
 
